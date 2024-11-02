@@ -1,4 +1,4 @@
-package academy.devdojo.constrollers;
+package academy.devdojo.constroller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

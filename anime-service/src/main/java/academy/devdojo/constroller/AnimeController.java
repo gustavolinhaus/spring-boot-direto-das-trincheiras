@@ -1,4 +1,4 @@
-package academy.devdojo.constrollers;
+package academy.devdojo.constroller;
 
 import academy.devdojo.domain.Anime;
 import lombok.extern.slf4j.Slf4j;
