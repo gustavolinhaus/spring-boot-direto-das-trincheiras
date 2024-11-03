@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("v1/heroes")
 public class HeroController {
-    private static final List<String> HEROES = List.of("Guts", "Zoro", "Kakashi","Goku");
+    private static final List<String> HEROES = List.of("Guts", "Zoro", "Kakashi", "Goku");
 
     @GetMapping
     public List<String> listAllHeroes() {
