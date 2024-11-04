@@ -3,6 +3,7 @@ package academy.devdojo.constroller;
 import academy.devdojo.domain.Anime;
 import academy.devdojo.mapper.AnimeMapper;
 import academy.devdojo.request.AnimePostRequest;
+import academy.devdojo.request.AnimePutRequest;
 import academy.devdojo.response.AnimeGetResponse;
 import academy.devdojo.response.AnimePostResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -77,6 +79,23 @@ public class AnimeController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not Found"));
 
         Anime.getAnimes().remove(animeToDelete);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody AnimePutRequest request) {
+        log.debug("Request to update anime {}", request);
+
+        var animeToRemove = Anime.getAnimes()
+                .stream()
+                .filter(anime -> anime.getId().equals(request.getId()))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not Found"));
+
+        var animeUpdated = MAPPER.toAnime(request);
+        Anime.getAnimes().remove(animeToRemove);
+        Anime.getAnimes().add(animeUpdated);
 
         return ResponseEntity.noContent().build();
     }
