@@ -31,7 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProducerController {
 
-    private static final ProducerMapper MAPPER = ProducerMapper.INSTANCE;
+    private final ProducerMapper mapper;
     private final ProducerService service;
 
     @GetMapping
@@ -39,7 +39,7 @@ public class ProducerController {
         log.debug("Request received to list all producers, param name '{}'", name);
         var producers = service.findAll(name);
 
-        var producerGetResponses = MAPPER.toProducerGetResponseList(producers);
+        var producerGetResponses = mapper.toProducerGetResponseList(producers);
 
         return ResponseEntity.ok(producerGetResponses);
     }
@@ -50,7 +50,7 @@ public class ProducerController {
 
         var producer = service.findByIdOrThrowNotFound(id);
 
-        var producerGetResponse = MAPPER.toProducerGetResponse(producer);
+        var producerGetResponse = mapper.toProducerGetResponse(producer);
 
         return ResponseEntity.ok(producerGetResponse);
     }
@@ -59,11 +59,11 @@ public class ProducerController {
             headers = "x-api-key")
     public ResponseEntity<ProducerPostResponse> save(@RequestBody ProducerPostRequest producerPostRequest, @RequestHeader HttpHeaders headers) {
         log.info("{}", headers);
-        var producer = MAPPER.toProducer(producerPostRequest);
+        var producer = mapper.toProducer(producerPostRequest);
 
         var producerSaved = service.save(producer);
 
-        var producerPostResponse = MAPPER.toProducerPostResponse(producerSaved);
+        var producerPostResponse = mapper.toProducerPostResponse(producerSaved);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(producerPostResponse);
     }
@@ -81,7 +81,7 @@ public class ProducerController {
     public ResponseEntity<Void> update(@RequestBody ProducerPutRequest request) {
         log.debug("Request to update producer {}", request);
 
-        var producerToUpdate = MAPPER.toProducer(request);
+        var producerToUpdate = mapper.toProducer(request);
 
         service.update(producerToUpdate);
 
