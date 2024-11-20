@@ -28,7 +28,8 @@ import java.util.List;
 
 @WebMvcTest(controllers = ProducerController.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ComponentScan(basePackages = "academy.devdojo")
+@ComponentScan(basePackages = {"academy.devdojo"})
+//@ActiveProfiles("test")
 class ProducerControllerTest {
 
     private static final String URL = "/v1/producers";
