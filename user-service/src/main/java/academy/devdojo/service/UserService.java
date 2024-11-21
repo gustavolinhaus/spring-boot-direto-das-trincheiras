@@ -27,4 +27,9 @@ public class UserService {
     public User save(User user) {
         return repository.save(user);
     }
+
+    public void delete(Long id) {
+        var producer = findByIdOrThrowNotFound(id);
+        repository.delete(producer);
+    }
 }

@@ -96,4 +96,18 @@ class UserHardCodedRepositoryTest {
 
         assertThat(userSavedOptional).isPresent().contains(userToSave);
     }
+
+    @Test
+    @DisplayName("delete removes an user")
+    @Order(6)
+    void delete_RemoveUser_WhenSuccessful() {
+        BDDMockito.when(userData.getUsers()).thenReturn(userList);
+
+        var userToDelete = userList.getFirst();
+        respository.delete(userToDelete);
+
+        var users = respository.findAll();
+
+        Assertions.assertThat(users).isNotEmpty().doesNotContain(userToDelete);
+    }
 }
