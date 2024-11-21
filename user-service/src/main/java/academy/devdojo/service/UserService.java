@@ -14,6 +14,6 @@ public class UserService {
     private final UserHardCodedRepository repository;
 
     public List<User> findAll(String firstName) {
-        return firstName == null ? repository.findAll() : repository.findByName(firstName);
+        return firstName == null ? repository.findAll() : repository.findByFirstName(firstName);
     }
 }
