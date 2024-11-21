@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +29,13 @@ public class UserController {
         var users = service.findAll(firstName);
         var userGetResponses = mapper.toUserGetResponseList(users);
         return ResponseEntity.ok(userGetResponses);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<UserGetResponse> findById(@PathVariable Long id) {
+        log.debug("Request to find user by id: {}", id);
+        var user = service.findByIdOrThrowNotFound(id);
+        var userGetResponse = mapper.toUserGetResponse(user);
+        return ResponseEntity.ok(userGetResponse);
     }
 }
