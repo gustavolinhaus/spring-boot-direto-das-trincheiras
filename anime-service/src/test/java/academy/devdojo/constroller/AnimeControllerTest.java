@@ -129,7 +129,7 @@ class AnimeControllerTest {
     void save_CreatesAnime_WhenSuccessful() throws Exception {
         var request = fileUtils.readResourceFile("anime/post-request-anime-200.json");
         var response = fileUtils.readResourceFile("anime/post-response-anime-201.json");
-        var animeToSave = Anime.builder().id(99L).name("Overlord").build();
+        var animeToSave = animeUtils.newAnimeToSave();
 
         BDDMockito.when(repository.save(ArgumentMatchers.any())).thenReturn(animeToSave);
 
