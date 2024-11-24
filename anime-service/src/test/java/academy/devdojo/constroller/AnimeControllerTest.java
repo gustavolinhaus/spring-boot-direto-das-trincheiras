@@ -118,9 +118,9 @@ class AnimeControllerTest {
     }
 
     @Test
-    @DisplayName("GET v1/animes/99 throws ResponseStatusException 404 when anime is not found")
+    @DisplayName("GET v1/animes/99 throws NotFound 404 when anime is not found")
     @Order(5)
-    void findById_ThrowsResponseStatusException_WhenAnimeIsNotFound() throws Exception {
+    void findById_ThrowsNotFound_WhenAnimeIsNotFound() throws Exception {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animesList);
         var id = 99L;
 
@@ -165,9 +165,9 @@ class AnimeControllerTest {
     }
 
     @Test
-    @DisplayName("DELETE v1/animes/99 throws ResponseStatusException when anime is not found")
+    @DisplayName("DELETE v1/animes/99 throws NotFound when anime is not found")
     @Order(8)
-    void delete_ThrowsResponseStatusException_WhenAnimeIsNotFound() throws Exception {
+    void delete_ThrowsNotFound_WhenAnimeIsNotFound() throws Exception {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animesList);
         var id = 99L;
 
@@ -195,9 +195,9 @@ class AnimeControllerTest {
     }
 
     @Test
-    @DisplayName("PUT v1/animes throws ResponseStatusException when anime is not found")
+    @DisplayName("PUT v1/animes throws NotFound when anime is not found")
     @Order(10)
-    void update_ThrowsResponseStatusException_WhenAnimeIsNotFound() throws Exception {
+    void update_ThrowsNotFound_WhenAnimeIsNotFound() throws Exception {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animesList);
         var request = fileUtils.readResourceFile("anime/put-request-anime-404.json");
 
