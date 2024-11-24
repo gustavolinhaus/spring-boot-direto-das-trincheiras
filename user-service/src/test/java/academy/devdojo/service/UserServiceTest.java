@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -134,6 +135,32 @@ class UserServiceTest {
 
         Assertions.assertThatException()
                 .isThrownBy(() -> service.delete(userToDelete.getId()))
+                .isInstanceOf(ResponseStatusException.class);
+    }
+
+    @Test
+    @DisplayName("update updates an user")
+    @Order(9)
+    void update_UpdatesUser_WhenSuccessful() {
+        var userToUpdate = userList.getFirst();
+        userToUpdate.setFirstName("Inuyasha");
+
+        BDDMockito.when(repository.findById(userToUpdate.getId())).thenReturn(Optional.of(userToUpdate));
+        BDDMockito.doNothing().when(repository).update(userToUpdate);
+
+        Assertions.assertThatNoException().isThrownBy(() -> service.update(userToUpdate));
+    }
+
+    @Test
+    @DisplayName("update throws ResponseStatusException when user is not found")
+    @Order(10)
+    void update_ThrowsResponseStatusException_WhenUserIsNotFound() {
+        var userToUpdate = userList.getFirst();
+
+        BDDMockito.when(repository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.empty());
+
+        Assertions.assertThatException()
+                .isThrownBy(() -> service.update(userToUpdate))
                 .isInstanceOf(ResponseStatusException.class);
     }
 }

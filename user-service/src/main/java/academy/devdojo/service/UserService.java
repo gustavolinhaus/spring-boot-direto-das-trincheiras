@@ -29,7 +29,12 @@ public class UserService {
     }
 
     public void delete(Long id) {
-        var producer = findByIdOrThrowNotFound(id);
-        repository.delete(producer);
+        var user = findByIdOrThrowNotFound(id);
+        repository.delete(user);
+    }
+
+    public void update(User userToUpdate) {
+        var user = findByIdOrThrowNotFound(userToUpdate.getId());
+        repository.update(userToUpdate);
     }
 }
